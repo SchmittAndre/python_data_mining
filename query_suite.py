@@ -120,21 +120,21 @@ class QuerySuite:
         qs = self
         q_ttsid = qs.get_ttsid_like(
             dailytripid=dailytripid, yymmddhhmm=yymmddhhmm)
-        q_ttsid_sorted = qs.sort_by_stationindex(q_ttsid)
+        q_ttsid_sorted = qs.sort_by_stopindex(q_ttsid)
         return q_ttsid_sorted
         
     
-    def sort_by_stationindex(self, data, column=0):
+    def sort_by_stopindex(self, data, column=0):
         """ 
-        Sorts given data by the stationindex of the dailytripid in ascending 
+        Sorts given data by the stop index of the dailytripid in ascending 
         order. 
-        'column' specifies the index of the inner tuple that holds the 
-        dailytripid.
+        'column' specifies the column index of the tuples inside the data tuple
+        that hold the dailytripid.
         """
         def accessing(x):
             dailytripid = x[column]
-            stationindex = re.search("-?[0-9]*-[0-9]*-([0-9]+)", dailytripid)
-            stationindex = stationindex.group(1)
-            return int(stationindex)
+            stopindex = re.search("-?[0-9]*-[0-9]*-([0-9]+)", dailytripid)
+            stopindex = stopindex.group(1)
+            return int(stopindex)
             
         return sorted(data, key=accessing)
