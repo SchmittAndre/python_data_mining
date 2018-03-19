@@ -29,7 +29,7 @@ qs.use_dbc(dbc)
 qs.set_limit(5000)
 
 
-#r = qs.get_zugid_like(dailytripid="-100020256270627274", yymmddhhmm="", stopindex="")
+#r = qs.get_ttsid_like(dailytripid="-100020256270627274", yymmddhhmm="", stopindex="")
 #r = qs.get_zuege_by_zugid("8898709046814622615-1711301719-2")
 #r = qs.get_stationname_by_evanr("8000107")
 r = qs.get_ttsid_on_trip(

@@ -68,9 +68,10 @@ class QuerySuite:
         return result
     
     
-    def get_zugid_like(self, dailytripid="", yymmddhhmm="", stopindex=""):
+    def get_ttsid_like(self, dailytripid="", yymmddhhmm="", stopindex=""):
         """
-        Retrieves all zugids that match the specified SQL pattern.
+        Retrieves all time table stop ids (ttsid, named 'zugid' in database) 
+        that match the specified SQL pattern.
         'dailytripid' specifies pattern for the dailytripid.
         'yymmddhhmm' specifies the pattern for the second part of the zugid.
         'stopindex' specifies the pattern for the third part of the zugid.
@@ -117,7 +118,7 @@ class QuerySuite:
         """
         qs = self
         result = ()
-        q_zugid = qs.get_zugid_like(dailytripid=dailytripid, yymmddhhmm=yymmddhhmm)
+        q_zugid = qs.get_ttsid_like(dailytripid=dailytripid, yymmddhhmm=yymmddhhmm)
         q_zugid_sorted = qs.sort_by_stationindex(q_zugid)
         
         for zugid in q_zugid_sorted:
