@@ -108,17 +108,18 @@ class QuerySuite:
         
         
     # adcanced queries #########################################################
-    def get_stations_on_dialytrip(self, dailytripid):
+    def get_stations_on_trip(self, dailytripid, yymmddhhmm):
         """
-        Retrieves evanr of all stations on the given dailytripid. Stations are
-        sortet in the order of the trip.
+        Retrieves evanr of all stations on the given dailytripid an datetime 
+        pattern. Stations are sortet in the order of the trip.
         """
         qs = self
         result = ()
-        q_zugid = qs.get_zugid_like(dailytripid=dailytripid)
+        q_zugid = qs.get_zugid_like(dailytripid=dailytripid, yymmddhhmm=yymmddhhmm)
         q_zugid_sorted = qs.sort_by_stationindex(q_zugid)
         
         for zugid in q_zugid_sorted:
+            print(zugid)
             q_zug = qs.get_zug_by_zugid(zugid[0])
             q_evanr= qs.select(q_zug, columns=[9]) #select evanr
             result = result + q_evanr
