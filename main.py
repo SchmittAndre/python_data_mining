@@ -19,7 +19,7 @@ dbcconfig = configuration["dbcconfig"]
 #connect to db
 try:
     dbc = pymysql.connect(**dbcconfig)
-except mysql.connector.Error as err:
+except pymysql.connector.Error as err:
     print(err)
 
     
@@ -32,12 +32,16 @@ qs.set_limit(5000)
 #r = qs.get_zugid_like(dailytripid="-100020256270627274", yymmddhhmm="", stopindex="")
 #r = qs.get_zuege_by_zugid("8898709046814622615-1711301719-2")
 #r = qs.get_stationname_by_evanr("8000107")
-r = qs.get_stations_on_trip(
+r = qs.get_ttsid_on_trip(
     dailytripid="-5016615278318514860",
     yymmddhhmm="1712011704")
+print(r)
 for x in r:
-    name = qs.get_stationname_by_evanr(x[0])[0][0]
-    print(name)
+    #print(x[0])
+    zug = qs.get_zug_by_zugid(x[0])
+    zug = qs.select(zug, columns=[1,9])
+    evanr = qs.get_stationname_by_evanr(zug[0][1])
+    print(zug, evanr)
 
 
 #clean up

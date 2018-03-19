@@ -108,10 +108,12 @@ class QuerySuite:
         
         
     # adcanced queries #########################################################
-    def get_stations_on_trip(self, dailytripid, yymmddhhmm):
+    def get_ttsid_on_trip(self, dailytripid, yymmddhhmm):
         """
-        Retrieves evanr of all stations on the given dailytripid an datetime 
-        pattern. Stations are sortet in the order of the trip.
+        Retrieves all time table stop id (ttsid) (named zugid in data base) 
+        of the stops that are part of the trip. The trip is determined by 
+        matching the ttsid with the given dailytripid an datetime pattern. 
+        Stations are sortet in the order of the trip.
         """
         qs = self
         result = ()
@@ -120,8 +122,9 @@ class QuerySuite:
         
         for zugid in q_zugid_sorted:
             q_zug = qs.get_zug_by_zugid(zugid[0])
-            q_evanr= qs.select(q_zug, columns=[9]) #select evanr
-            result = result + q_evanr
+            #select station id (zugid)
+            q_stationid = qs.select(q_zug, columns=[1]) 
+            result = result + q_stationid
         
         return result
         
