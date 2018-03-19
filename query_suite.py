@@ -119,7 +119,6 @@ class QuerySuite:
         q_zugid_sorted = qs.sort_by_stationindex(q_zugid)
         
         for zugid in q_zugid_sorted:
-            print(zugid)
             q_zug = qs.get_zug_by_zugid(zugid[0])
             q_evanr= qs.select(q_zug, columns=[9]) #select evanr
             result = result + q_evanr
