@@ -25,7 +25,6 @@ class QuerySuite:
 
     
     # class helper functions ###################################################
-    
     def _append_limit_to_query(self, query):
         """
         Takes a query as a string and appends a limit clause. If the limit value
@@ -126,15 +125,18 @@ class QuerySuite:
     
     def sort_by_stopindex(self, data, column=0):
         """ 
-        Sorts given data by the stop index of the dailytripid in ascending 
-        order. 
+        Sorts given data by the stop index of the ttsid in ascending order. 
         'column' specifies the column index of the tuples inside the data tuple
         that hold the dailytripid.
         """
-        def accessing(x):
+        def access_stopindex(x):
+            """
+            This function helps the sorting function to access the stop index
+            inside the ttsid by using regexa and convert to integer.
+            """
             dailytripid = x[column]
             stopindex = re.search("-?[0-9]*-[0-9]*-([0-9]+)", dailytripid)
             stopindex = stopindex.group(1)
             return int(stopindex)
             
-        return sorted(data, key=accessing)
+        return sorted(data, key=access_stopindex)
