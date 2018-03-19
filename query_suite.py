@@ -53,12 +53,13 @@ class QuerySuite:
     
         
     # basic queries ############################################################
-    def get_zug_by_zugid(self, zugid):
+    def get_tts_by_ttsid(self, ttsid):
         """
-        Retrieves full row of data base table by given 'zugid'.
+        Retrieves full row of database table by given 'ttsid' (named 'zugid'
+        in database).
         """
         query = "SELECT * FROM zuege WHERE zuege.zugid = \"{}\""\
-            .format(zugid)
+            .format(ttsid)
         query = self._append_limit_to_query(query)
         
         cursor = self.dbc.cursor()
@@ -117,17 +118,10 @@ class QuerySuite:
         Stations are sortet in the order of the trip.
         """
         qs = self
-        result = ()
-        q_zugid = qs.get_ttsid_like(dailytripid=dailytripid, yymmddhhmm=yymmddhhmm)
-        q_zugid_sorted = qs.sort_by_stationindex(q_zugid)
-        
-        for zugid in q_zugid_sorted:
-            q_zug = qs.get_zug_by_zugid(zugid[0])
-            #select station id (zugid)
-            q_stationid = qs.select(q_zug, columns=[1]) 
-            result = result + q_stationid
-        
-        return result
+        q_ttsid = qs.get_ttsid_like(
+            dailytripid=dailytripid, yymmddhhmm=yymmddhhmm)
+        q_ttsid_sorted = qs.sort_by_stationindex(q_ttsid)
+        return q_ttsid_sorted
         
     
     def sort_by_stationindex(self, data, column=0):
